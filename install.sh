@@ -4,9 +4,11 @@
 # Author : Samuel Kerchouni
 # Date : 04/06/2022
 # Version : 1.O
-# Description : Install starknet node
+# Description : Install starknet node as a service
 ##########################################################################
 
+# Ask endpoint interactive part
+read -p 'Past Endpoint Generated on Infura or Alchemy: ' endpoint
 
 # Update package
 sudo apt update && sudo apt upgrade -y
@@ -40,7 +42,7 @@ rustc --version
 # Force Update
 rustup update stable --force
 
-# git clone
+# git clone pathfinder https://github.com/eqlabs/pathfinder/releases # check release actually v0.2.3-alpha
 git clone --branch v0.2.3-alpha https://github.com/eqlabs/pathfinder.git
 
 # create venv
@@ -68,9 +70,6 @@ cargo build --release --bin pathfinder
 
 cd /home/ubuntu/starknet-node
 
-# ask to endpoint to create service
-read -p 'Username: ' endpoint
-
 echo "
 [Unit]
 Description=<node starknet services>
@@ -78,7 +77,7 @@ Description=<node starknet services>
 [Service]
 User=ubuntu
 WorkingDirectory=/home/ubuntu/starknet-node
-ExecStart=/bin/bash -c "source /home/ubuntu/starknet-node/pathfinder/py/.venv/bin/activate && /home/ubuntu/starknet-node/pathfinder/target/release/pathfinder --http-rpc 0.0.0.0:9545 --ethereum.url $endpoint"
+ExecStart=/bin/bash -c 'source /home/ubuntu/starknet-node/pathfinder/py/.venv/bin/activate && /home/ubuntu/starknet-node/pathfinder/target/release/pathfinder --http-rpc 0.0.0.0:9545 --ethereum.url $endpoint'
 
 [Install]
 WantedBy=multi-user.target" >> starknet.service
