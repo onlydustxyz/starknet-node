@@ -68,6 +68,21 @@ cargo build --release --bin pathfinder
 
 cd /home/ubuntu/starknet-node
 
+# ask to endpoint to create service
+read -p 'Username: ' endpoint
+
+echo "
+[Unit]
+Description=<node starknet services>
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/starknet-node
+ExecStart=/bin/bash -c "source /home/ubuntu/starknet-node/pathfinder/py/.venv/bin/activate && /home/ubuntu/starknet-node/pathfinder/target/release/pathfinder --http-rpc 0.0.0.0:9545 --ethereum.url $endpoint"
+
+[Install]
+WantedBy=multi-user.target" >> starknet.service
+
 # move Service
 sudo mv starknet.service /etc/systemd/system/starknet.service
 
