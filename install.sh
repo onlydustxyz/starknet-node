@@ -51,10 +51,7 @@ echo "set right"
 sudo chown -R $(whoami) /home/ubuntu/
 
 # create folder
-cd /home/ubuntu/pathfinder/py
-
-# create folder
-cd pathfinder/py
+cd /home/ubuntu/starknet-node/pathfinder/py
 
 # create venv
 python3 -m venv .venv
@@ -68,6 +65,8 @@ PIP_REQUIRE_VIRTUALENV=true pip install -r requirements-dev.txt
 
 # Build with cargo
 cargo build --release --bin pathfinder
+
+cd /home/ubuntu/starknet-node
 
 # move Service
 sudo mv starknet.service /etc/systemd/system/starknet.service
