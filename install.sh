@@ -66,9 +66,6 @@ source .venv/bin/activate
 PIP_REQUIRE_VIRTUALENV=true pip install --upgrade pip
 PIP_REQUIRE_VIRTUALENV=true pip install -r requirements-dev.txt
 
-# Pytest
-pytest
-
 # Build with cargo
 cargo build --release --bin pathfinder
 
