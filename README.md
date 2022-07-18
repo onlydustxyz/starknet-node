@@ -1,2 +1,2 @@
 # starknet-node
-Script to create a starknet node -> soon on mirror.xyz
+Check https://mirror.xyz/onlydust.eth/5-AwlDVo6ROXLRQzWDnMLCVVuVEU98koOMXn_wqV_Hk
