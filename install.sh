@@ -2,14 +2,16 @@
 ##########################################################################
 # Société : OnlyDust
 # Author : Samuel Kerchouni
-# Date : 04/06/2022
-# Version : 1.O
+# Date : 21/06/2022
+# Version : 1.1
+# changelog : use var for $HOME & $USER
 # Description : Install starknet node as a service
 ##########################################################################
 
 # Ask endpoint interactive part
 read -p 'Past Endpoint Generated on Infura or Alchemy: ' endpoint
 
+echo "==================================================="
 # Update package
 sudo apt update && sudo apt upgrade -y
 
@@ -43,17 +45,17 @@ rustc --version
 rustup update stable --force
 
 # git clone pathfinder https://github.com/eqlabs/pathfinder/releases # check release actually v0.2.4-alpha
-git clone --branch v0.2.5-alpha https://github.com/eqlabs/pathfinder.git
+git clone --branch v0.2.6-alpha https://github.com/eqlabs/pathfinder.git
 
 # create venv
 sudo apt install -y python3.8-venv
 
 # chmod
 echo "set right"
-sudo chown -R $(whoami) /home/ubuntu/
+sudo chown -R $(whoami) $HOME
 
 # create folder
-cd /home/ubuntu/starknet-node/pathfinder/py
+cd $HOME/starknet-node/pathfinder/py
 
 # create venv
 python3 -m venv .venv
@@ -68,16 +70,16 @@ PIP_REQUIRE_VIRTUALENV=true pip install -r requirements-dev.txt
 # Build with cargo
 cargo build --release --bin pathfinder
 
-cd /home/ubuntu/starknet-node
+cd $HOME/starknet-node
 
 echo "
 [Unit]
 Description=<node starknet services>
 
 [Service]
-User=ubuntu
-WorkingDirectory=/home/ubuntu/starknet-node
-ExecStart=/bin/bash -c 'source /home/ubuntu/starknet-node/pathfinder/py/.venv/bin/activate && /home/ubuntu/starknet-node/pathfinder/target/release/pathfinder --http-rpc 0.0.0.0:9545 --ethereum.url $endpoint'
+User=$USER
+WorkingDirectory=$HOME/starknet-node
+ExecStart=/bin/bash -c 'source $HOME/starknet-node/pathfinder/py/.venv/bin/activate && $HOME/starknet-node/pathfinder/target/release/pathfinder --http-rpc 0.0.0.0:9545 --ethereum.url $endpoint'
 
 [Install]
 WantedBy=multi-user.target" >> starknet.service
@@ -93,3 +95,14 @@ sudo systemctl start starknet.service
 
 # enable your service on every reboot
 sudo systemctl enable starknet.service
+
+# Check if install is success
+echo "==================================================="
+echo -e '\n\e[42mCheck node status\e[0m\n' && sleep 1
+if [[ `service starknet status | grep active` =~ "running" ]]; then
+  echo -e "Your StarkNet node \e[32minstalled and works\e[39m!"
+  echo -e "You can check node status by the command \e[7mservice starknetd status\e[0m"
+  echo -e "Press \e[7mQ\e[0m for exit from status menu"
+else
+  echo -e "Your StarkNet node \e[31mwas not installed correctly\e[39m, please reinstall."
+fi
