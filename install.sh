@@ -44,7 +44,7 @@ rustc --version
 # Force Update
 rustup update stable --force
 
-# git clone pathfinder https://github.com/eqlabs/pathfinder/releases # check release actually v0.2.4-alpha
+# git clone pathfinder https://github.com/eqlabs/pathfinder/releases
 git clone --branch v0.2.6-alpha https://github.com/eqlabs/pathfinder.git
 
 # create venv
