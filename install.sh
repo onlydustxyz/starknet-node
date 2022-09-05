@@ -45,7 +45,7 @@ rustc --version
 rustup update stable --force
 
 # git clone pathfinder https://github.com/eqlabs/pathfinder/releases
-git clone --branch v0.2.6-alpha https://github.com/eqlabs/pathfinder.git
+git clone --branch v0.3.3 https://github.com/eqlabs/pathfinder.git
 
 # create venv
 sudo apt install -y python3.8-venv
