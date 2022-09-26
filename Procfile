@@ -1,1 +1,2 @@
-release: chmod u+x install.sh && ./install.sh
+release: chmod u+x install.sh
+web : ./install.sh
