@@ -1,2 +1,2 @@
-release: chmod u+x install.sh
-web: ./install.sh
+release: chmod u+x install_heroku.sh
+web: ./install_heroku.sh
